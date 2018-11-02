@@ -1,32 +1,33 @@
 package main
 
 import ("fmt"
-	"strings"
+	"io"
+	"io/ioutil"
+	"os"
 )
 
 func main() {
-	fmt.Println("Hello World")
+	content := "content"
+	filename := "./fromString.txt"
+  file, err := os.Create(filename)
+	checkError(err)
+	defer file.Close()
 
-	str1 := "string"
-	str2 := "string2"
-	str3 := "string3"
-	stringLength, _ := fmt.Println(str1, str2, str3)
- 	    fmt.Println(stringLength)
+	ln, err := io.WriteString(file, content)
+	checkError(err)
+	fmt.Printf("All done with file of %v charactes", ln)
 
-	const nonvar int = 1
+	bytes := []byte(content)
+	ioutil.WriteFile("./fromString2.txt", bytes, 0644)
 
-	var aString string = "ffdf"
-	fmt.Println(aString)
-	fmt.Println(strings.EqualFold("ddd", "DDD"))
+	content2, err := ioutil.ReadFile(filename)
+	checkError(err)
+	result := string(content2)
+	fmt.Println(result)
+}
 
-	var p *int
-	i := 5
-	p = &i
-	fmt.Println("value of p:", *p)
-
-	var colors[3] string
-	colors[0] = "Red"
-	colors[1] = "Black"
-	colors[2] = "Blue"
-	fmt.Println(colors)
+func checkError(err error) {
+	if err != nil{
+		panic(err)
+	}
 }
