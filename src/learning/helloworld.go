@@ -4,6 +4,7 @@ import ("fmt"
 	"io"
 	"io/ioutil"
 	"os"
+	"textutil"
 )
 
 func main() {
@@ -12,6 +13,8 @@ func main() {
   file, err := os.Create(filename)
 	checkError(err)
 	defer file.Close()
+
+	fmt.Println(textutil.FullName("Bartosz", "Piękny"))
 
 	ln, err := io.WriteString(file, content)
 	checkError(err)
